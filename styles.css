@@ -19,3 +19,17 @@ h1 {
   font-weight: bold;
   transition: width 1s ease, height 1s ease;
 }
+
+.ball1 {
+  --size: 100px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  margin-inline: auto;
+  background-color: red;
+  text-align: center;
+  align-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  transition: width 1s ease, height 1s ease;
+}
