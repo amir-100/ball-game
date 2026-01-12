@@ -1,0 +1,15 @@
+body {
+  background-color: black;
+}
+
+h1 {
+  color: white;
+}
+
+.ball {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-inline: auto;
+    background-color: blue;
+}
