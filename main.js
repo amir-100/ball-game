@@ -1,7 +1,7 @@
 "use strict";
 
 const onBallClick = (elBall) => {
-  const step = 50;
+  const step = getRandomInt(20, 60);
   const max = 400;
   const min = 100;
   const size = parseFloat(elBall.style.getPropertyValue("--size") || min);
