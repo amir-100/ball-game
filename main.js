@@ -10,4 +10,5 @@ const onBallClick = (elBall) => {
 
   elBall.style.setProperty("--size", `${newSize}px`);
   elBall.textContent = newSize;
+  elBall.style.backgroundColor = getRandomColor();
 };
