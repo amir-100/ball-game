@@ -1,8 +1,12 @@
 "use strict";
 
 const onBallClick = (elBall) => {
-  const size = parseFloat(elBall.style.getPropertyValue("--size") || 100);
-  const newSize = size + 50;
+  const step = 50;
+  const max = 400;
+  const min = 100;
+  const size = parseFloat(elBall.style.getPropertyValue("--size") || min);
+  const nextSize = size + step;
+  const newSize = nextSize > max ? min : nextSize;
 
   elBall.style.setProperty("--size", `${newSize}px`);
   elBall.textContent = newSize;
