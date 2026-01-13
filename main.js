@@ -1,39 +1,47 @@
 "use strict";
 
+const MIN_SIZE = 100;
+
+const getBallSize = (elBall, minSize = MIN_SIZE) => {
+  const size = parseInt(getComputedStyle(elBall).getPropertyValue("--size"));
+
+  return Number.isNaN(size) ? minSize : size;
+};
+
+const setBallSize = (elBall, size) => {
+  elBall.style.setProperty("--size", `${size}px`);
+  elBall.textContent = size;
+};
+
+const getBallColor = (elBall) => getComputedStyle(elBall).backgroundColor;
+
+const setBallColor = (elBall, color) => {
+  elBall.style.backgroundColor = color;
+};
+
 const onBallClick = (elBall, maxDiameter) => {
   const step = getRandomInt(20, 60);
-  const max = maxDiameter;
-  const min = 100;
-  const size = parseInt(
-    getComputedStyle(elBall).getPropertyValue("--size") || min
-  );
+  const size = getBallSize(elBall);
   const nextSize = size + step;
-  const newSize = nextSize > max ? min : nextSize;
+  const newSize = nextSize > maxDiameter ? MIN_SIZE : nextSize;
 
-  elBall.style.setProperty("--size", `${newSize}px`);
-  elBall.textContent = newSize;
-  elBall.style.backgroundColor = getRandomColor();
+  setBallSize(elBall, newSize);
+  setBallColor(elBall, getRandomColor());
 };
 
 const onThirdBallClick = () => {
   const elBall1 = document.querySelector(".ball1");
   const elBall2 = document.querySelector(".ball2");
 
-  const style1 = getComputedStyle(elBall1);
-  const style2 = getComputedStyle(elBall2);
+  const color1 = getBallColor(elBall1);
+  const color2 = getBallColor(elBall2);
 
-  const { backgroundColor: color1 } = style1;
-  const { backgroundColor: color2 } = style2;
+  const size1 = getBallSize(elBall1);
+  const size2 = getBallSize(elBall2);
 
-  const size1 = parseInt(style1.getPropertyValue("--size"));
-  const size2 = parseInt(style2.getPropertyValue("--size"));
+  setBallSize(elBall1, size2);
+  setBallSize(elBall2, size1);
 
-  elBall1.style.setProperty("--size", `${size2}px`);
-  elBall2.style.setProperty("--size", `${size1}px`);
-
-  elBall1.textContent = size2;
-  elBall2.textContent = size1;
-
-  elBall1.style.backgroundColor = color2;
-  elBall2.style.backgroundColor = color1;
+  setBallColor(elBall1, color2);
+  setBallColor(elBall2, color1);
 };
