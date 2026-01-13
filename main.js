@@ -10,6 +10,9 @@ let gMoveCount = 0;
 let gTimeoutId = null;
 let gIntervalId = null;
 
+let gTimerId = null;
+let gStartTime = null;
+
 const onInit = () => {
   gState.balls = Array.from(document.querySelectorAll(".ball")).map(
     (elBall) => ({
@@ -22,7 +25,7 @@ const onInit = () => {
   gState.pageColor = getComputedStyle(document.body).backgroundColor;
 
   saveState(true);
-  updateTitle();
+  updateTitleWithTime(0);
 };
 
 const saveState = (isInitial = false) => {
@@ -40,15 +43,31 @@ const saveState = (isInitial = false) => {
   gHistoryIdx++;
 
   if (!isInitial) {
+    if (gMoveCount === 0) {
+      startTimer();
+    }
+
     gMoveCount++;
-    updateTitle();
   }
 
   updateUndoRedoButtons();
 };
 
-const updateTitle = () => {
-  document.title = `The Ball Game (${gMoveCount} moves)`;
+const updateTitleWithTime = (seconds) => {
+  document.title = `The Ball Game (${gMoveCount} moves | ${seconds}s)`;
+};
+
+const startTimer = () => {
+  if (gTimerId) return;
+
+  gStartTime = Date.now();
+
+  gTimerId = setInterval(() => {
+    const elapsedMs = Date.now() - gStartTime;
+    const seconds = Math.floor(elapsedMs / 1000);
+
+    updateTitleWithTime(seconds);
+  }, 1000);
 };
 
 const applyState = (state) => {
