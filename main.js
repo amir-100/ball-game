@@ -54,6 +54,14 @@ const onBallClick = (elBall, maxDiameter) => {
   setBallColor(elBall, getRandomColor());
 };
 
+const onFirstBallClick = (elBall) => {
+  onBallClick(elBall, 450);
+};
+
+const onSecondBallClick = (elBall) => {
+  onBallClick(elBall, 500);
+};
+
 const onThirdBallClick = () => {
   const elBall1 = document.querySelector(".ball1");
   const elBall2 = document.querySelector(".ball2");
