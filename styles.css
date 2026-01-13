@@ -19,6 +19,10 @@ h1 {
   transition: width 1s ease, height 1s ease;
 }
 
+.ball:not(:last-of-type) {
+  margin-block-end: 10px;
+}
+
 .ball1 {
   background-color: blue;
 }
