@@ -6,44 +6,31 @@ h1 {
   color: white;
 }
 
-.ball1 {
+.ball {
   --size: 100px;
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
   margin-inline: auto;
-  background-color: blue;
   text-align: center;
   align-content: center;
   font-size: 22px;
   font-weight: bold;
   transition: width 1s ease, height 1s ease;
+}
+
+.ball1 {
+  background-color: blue;
 }
 
 .ball2 {
-  --size: 100px;
-  width: var(--size);
-  height: var(--size);
-  border-radius: 50%;
-  margin-inline: auto;
   background-color: red;
-  text-align: center;
-  align-content: center;
-  font-size: 22px;
-  font-weight: bold;
-  transition: width 1s ease, height 1s ease;
 }
 
 .ball3 {
-  --size: 100px;
-  width: var(--size);
-  height: var(--size);
-  border-radius: 50%;
-  margin-inline: auto;
   background-color: orange;
-  text-align: center;
-  align-content: center;
-  font-size: 22px;
-  font-weight: bold;
-  transition: width 1s ease, height 1s ease;
+}
+
+.ball4 {
+  background-color: green;
 }
