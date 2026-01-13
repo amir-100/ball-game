@@ -61,3 +61,7 @@ const onFourthBallClick = () => {
   decreaseBallSize(elBall1, step);
   decreaseBallSize(elBall2, step);
 };
+
+const onFifthBallClick = () => {
+  document.body.style.backgroundColor = getRandomColor();
+};
