@@ -40,6 +40,10 @@ const decreaseBallSize = (elBall, step) => {
   setBallSize(elBall, newSize);
 };
 
+const setPageColor = (color) => {
+  document.body.style.backgroundColor = color;
+};
+
 const onBallClick = (elBall, maxDiameter) => {
   const step = getRandomInt(20, 60);
   const size = getBallSize(elBall);
@@ -77,7 +81,7 @@ const onFourthBallClick = () => {
 };
 
 const onFifthBallClick = () => {
-  document.body.style.backgroundColor = getRandomColor();
+  setPageColor(getRandomColor());
 };
 
 const onSixthBallClick = () => {
@@ -86,5 +90,5 @@ const onSixthBallClick = () => {
     setBallSize(el, size);
   });
 
-  document.body.style.backgroundColor = gState.pageColor;
+  setPageColor(gState.pageColor);
 };
