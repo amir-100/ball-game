@@ -19,6 +19,13 @@ const setBallColor = (elBall, color) => {
   elBall.style.backgroundColor = color;
 };
 
+const decreaseBallSize = (elBall, step) => {
+  const size = getBallSize(elBall);
+  const newSize = Math.max(size - step, MIN_SIZE);
+
+  setBallSize(elBall, newSize);
+};
+
 const onBallClick = (elBall, maxDiameter) => {
   const step = getRandomInt(20, 60);
   const size = getBallSize(elBall);
@@ -51,14 +58,6 @@ const onFourthBallClick = () => {
   const elBall1 = document.querySelector(".ball1");
   const elBall2 = document.querySelector(".ball2");
 
-  const size1 = getBallSize(elBall1);
-  const size2 = getBallSize(elBall2);
-
-  const nextSize1 = size1 - step;
-  const nextSize2 = size2 - step;
-  const newSize1 = nextSize1 < MIN_SIZE ? MIN_SIZE : nextSize1;
-  const newSize2 = nextSize2 < MIN_SIZE ? MIN_SIZE : nextSize2;
-
-  setBallSize(elBall1, newSize1);
-  setBallSize(elBall2, newSize2);
+  decreaseBallSize(elBall1, step);
+  decreaseBallSize(elBall2, step);
 };
