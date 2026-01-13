@@ -4,7 +4,7 @@ const onBallClick = (elBall, maxDiameter) => {
   const step = getRandomInt(20, 60);
   const max = maxDiameter;
   const min = 100;
-  const size = parseFloat(
+  const size = parseInt(
     getComputedStyle(elBall).getPropertyValue("--size") || min
   );
   const nextSize = size + step;
