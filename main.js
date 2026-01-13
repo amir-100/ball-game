@@ -5,6 +5,7 @@ const MIN_SIZE = 100;
 const gState = {};
 const gHistory = [];
 let gHistoryIdx = -1;
+let gMoveCount = 0;
 
 let gTimeoutId = null;
 let gIntervalId = null;
@@ -20,10 +21,11 @@ const onInit = () => {
 
   gState.pageColor = getComputedStyle(document.body).backgroundColor;
 
-  saveState();
+  saveState(true);
+  updateTitle();
 };
 
-const saveState = () => {
+const saveState = (isInitial = false) => {
   gHistory.splice(gHistoryIdx + 1);
 
   const snapshot = {
@@ -37,7 +39,16 @@ const saveState = () => {
   gHistory.push(snapshot);
   gHistoryIdx++;
 
+  if (!isInitial) {
+    gMoveCount++;
+    updateTitle();
+  }
+
   updateUndoRedoButtons();
+};
+
+const updateTitle = () => {
+  document.title = `The Ball Game (${gMoveCount} moves)`;
 };
 
 const applyState = (state) => {
@@ -150,7 +161,7 @@ const onFourthBallClick = () => {
 
 const onFifthBallClick = () => {
   setPageColor(getRandomColor());
-  
+
   saveState();
 };
 
