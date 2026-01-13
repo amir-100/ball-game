@@ -4,6 +4,9 @@ const MIN_SIZE = 100;
 
 const gState = {};
 
+let gTimeoutId = null;
+let gIntervalId = null;
+
 const onInit = () => {
   gState.balls = Array.from(document.querySelectorAll(".ball")).map(
     (elBall) => ({
@@ -54,11 +57,11 @@ const onBallClick = (elBall, maxDiameter) => {
   setBallColor(elBall, getRandomColor());
 };
 
-const onFirstBallClick = (elBall) => {
+const onFirstBallClick = (elBall = document.querySelector(".ball1")) => {
   onBallClick(elBall, 450);
 };
 
-const onSecondBallClick = (elBall) => {
+const onSecondBallClick = (elBall = document.querySelector(".ball2")) => {
   onBallClick(elBall, 500);
 };
 
@@ -99,4 +102,33 @@ const onSixthBallClick = () => {
   });
 
   setPageColor(gState.pageColor);
+};
+
+const onSixthBallEnter = () => {
+  if (gIntervalId) return;
+
+  let cycle = 0;
+
+  gTimeoutId = setTimeout(() => {
+    gIntervalId = setInterval(() => {
+      onFirstBallClick();
+      onSecondBallClick();
+      onThirdBallClick();
+      onFourthBallClick();
+
+      cycle++;
+
+      if (cycle >= 10) {
+        onSixthBallLeave();
+      }
+    }, 2000);
+  }, 2000);
+};
+
+const onSixthBallLeave = () => {
+  clearTimeout(gTimeoutId);
+  clearInterval(gIntervalId);
+
+  gTimeoutId = null;
+  gIntervalId = null;
 };
