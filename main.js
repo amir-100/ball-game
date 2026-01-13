@@ -3,6 +3,8 @@
 const MIN_SIZE = 100;
 
 const gState = {};
+const gHistory = [];
+let gHistoryIdx = -1;
 
 let gTimeoutId = null;
 let gIntervalId = null;
@@ -17,6 +19,55 @@ const onInit = () => {
   );
 
   gState.pageColor = getComputedStyle(document.body).backgroundColor;
+
+  saveState();
+};
+
+const saveState = () => {
+  gHistory.splice(gHistoryIdx + 1);
+
+  const snapshot = {
+    pageColor: getComputedStyle(document.body).backgroundColor,
+    balls: gState.balls.map(({ el }) => ({
+      size: getBallSize(el),
+      color: getBallColor(el),
+    })),
+  };
+
+  gHistory.push(snapshot);
+  gHistoryIdx++;
+
+  updateUndoRedoButtons();
+};
+
+const applyState = (state) => {
+  setPageColor(state.pageColor);
+
+  gState.balls.forEach(({ el }, idx) => {
+    setBallSize(el, state.balls[idx].size);
+    setBallColor(el, state.balls[idx].color);
+  });
+};
+
+const updateUndoRedoButtons = () => {
+  document.querySelector(".undo").disabled = gHistoryIdx <= 0;
+  document.querySelector(".redo").disabled = gHistoryIdx >= gHistory.length - 1;
+};
+
+const onUndo = () => {
+  if (gHistoryIdx <= 0) return;
+
+  gHistoryIdx--;
+  applyState(gHistory[gHistoryIdx]);
+  updateUndoRedoButtons();
+};
+
+const onRedo = () => {
+  if (gHistoryIdx >= gHistory.length - 1) return;
+
+  gHistoryIdx++;
+  applyState(gHistory[gHistoryIdx]);
+  updateUndoRedoButtons();
 };
 
 const getBallSize = (elBall, minSize = MIN_SIZE) => {
@@ -55,6 +106,8 @@ const onBallClick = (elBall, maxDiameter) => {
 
   setBallSize(elBall, newSize);
   setBallColor(elBall, getRandomColor());
+
+  saveState();
 };
 
 const onFirstBallClick = (elBall = document.querySelector(".ball1")) => {
@@ -80,6 +133,8 @@ const onThirdBallClick = () => {
 
   setBallColor(elBall1, color2);
   setBallColor(elBall2, color1);
+
+  saveState();
 };
 
 const onFourthBallClick = () => {
@@ -89,10 +144,14 @@ const onFourthBallClick = () => {
 
   decreaseBallSize(elBall1, step);
   decreaseBallSize(elBall2, step);
+
+  saveState();
 };
 
 const onFifthBallClick = () => {
   setPageColor(getRandomColor());
+  
+  saveState();
 };
 
 const onSixthBallClick = () => {
@@ -102,6 +161,7 @@ const onSixthBallClick = () => {
   });
 
   setPageColor(gState.pageColor);
+  saveState();
 };
 
 const onSixthBallEnter = () => {
