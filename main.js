@@ -2,6 +2,20 @@
 
 const MIN_SIZE = 100;
 
+const gState = {};
+
+const onInit = () => {
+  gState.balls = Array.from(document.querySelectorAll(".ball")).map(
+    (elBall) => ({
+      el: elBall,
+      color: getBallColor(elBall),
+      size: getBallSize(elBall),
+    })
+  );
+
+  gState.pageColor = getComputedStyle(document.body).backgroundColor;
+};
+
 const getBallSize = (elBall, minSize = MIN_SIZE) => {
   const size = parseInt(getComputedStyle(elBall).getPropertyValue("--size"));
 
@@ -64,4 +78,13 @@ const onFourthBallClick = () => {
 
 const onFifthBallClick = () => {
   document.body.style.backgroundColor = getRandomColor();
+};
+
+const onSixthBallClick = () => {
+  gState.balls.forEach(({ el, color, size }) => {
+    setBallColor(el, color);
+    setBallSize(el, size);
+  });
+
+  document.body.style.backgroundColor = gState.pageColor;
 };
